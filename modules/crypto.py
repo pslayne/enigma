@@ -17,8 +17,6 @@ def encrypt(msg):
     key = generate_key(len(msg))
     encrypted_msg = xor(msg.encode(), key)
     size = (len(key) * 2).to_bytes(4, byteorder='big')
-    print(len(key) * 2)
-    print(size)
     concat = size + key + encrypted_msg
     return concat
 
