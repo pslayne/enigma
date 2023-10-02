@@ -5,13 +5,13 @@ def get_max_size(shape):
     size = shape[0] * shape[1] * 2
     if(len(shape) >= 3):
         size *= shape[2]
-    return size
+    return int(size / 8)
 
 def hide(img, cipher):
     max_size = get_max_size(img.shape)
     # raises value error if the image doesn't fit in the image 
     # or if the number characters is greater than the maximum number that can be represented in 32 bits
-    if(len(cipher) > max_size or len(cipher) > int('11111111111111111111111111111111', 2)):
+    if(len(cipher) > max_size or len(cipher) > int(32*'1', 2)):
         raise ValueError("Message doesn't fit")
 
     stream = cipher_to_bin(cipher)

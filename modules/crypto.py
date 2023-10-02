@@ -5,8 +5,8 @@ def generate_key(size):
     return randbytes(size)
 
 def xor(a, b):
-    result_int = int.from_bytes(a, byteorder="big") ^ int.from_bytes(b, byteorder="big")
-    return result_int.to_bytes(max(len(a), len(b)), byteorder="big")
+    result_int = int.from_bytes(a, 'big') ^ int.from_bytes(b, 'big')
+    return result_int.to_bytes(len(a), 'big')
 
 def encrypt(msg, codec = 'latin-1'):
     try:
@@ -16,7 +16,7 @@ def encrypt(msg, codec = 'latin-1'):
     
     key = generate_key(len(msg))
     encrypted_msg = xor(msg.encode(codec), key)
-    size = (len(key) * 2).to_bytes(4, byteorder='big')
+    size = (len(key) * 2).to_bytes(4, 'big')
     concat = size + key + encrypted_msg
     return concat
 
