@@ -14,7 +14,7 @@ messages = [hello, pridenprejudice, dune, lightningthief]
 
 for img in images:
     cv.imshow('original', img)
-    print(f'\nmax size for this image = {steg.get_max_size(img.shape)}')
+    print(f'\nmax size for this image = {steg.get_max_size(img.shape)}\n')
     cv.waitKey()
     i = 1 
     for msg in messages:
@@ -25,9 +25,31 @@ for img in images:
         plain_msg = crypto.decrypt(cipher_msg)
         print(f'message - {i}')
         print('-----------------------------')
+        print(f'size -> {steg.get_size(steg_img.flatten())}')
         print(f'cipher_msg -> {cipher_msg}')
         print(f'plain_msg -> {plain_msg}')
         i += 1
         cv.waitKey()
     cv.destroyAllWindows()
 
+msg = str(input('\ndigite uma mensagem: '))
+while(msg):
+    cv.imshow('original - lena', lena)
+
+    enc = crypto.encrypt(msg)
+    print(f'mensagem cifrada -> {enc}')
+
+    steg_img = steg.hide(img, enc)
+    cv.imshow('imagem com esteganografia', steg_img)
+    
+    cipher_msg = steg.reveal(steg_img)
+    plain_msg = crypto.decrypt(cipher_msg)
+    print(f'size -> {steg.get_size(steg_img.flatten())}')
+    print(f'mensagem cifrada -> {cipher_msg}')
+    print(f'mensagem decifrada -> {plain_msg}')
+
+    cv.waitKey()
+    cv.destroyAllWindows()
+    msg = str(input('\ndigite uma mensagem: '))
+cv.destroyAllWindows()
+    
